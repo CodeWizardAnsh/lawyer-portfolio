@@ -1,67 +1,101 @@
 import React from 'react';
 import { LAWYER_DETAILS, SERVICES } from '../constants';
+import Reveal from './Reveal';
 
 const Hero: React.FC = () => {
   return (
-    <div id="home" className="relative bg-legal-50 min-h-screen flex flex-col pt-20 overflow-hidden">
+    <div id="home" className="relative bg-legal-50 min-h-screen flex items-center overflow-hidden">
       
-      <div className="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        {/* Left Content */}
-        <div className="z-10 py-12 lg:py-0">
-          <p className="text-legal-900 font-bold tracking-widest uppercase text-sm mb-4">Our Services</p>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-legal-900 leading-[1.1]">
-            We are specialists <br/>
-            <span className="font-normal italic">in the legal field</span>
-          </h1>
-          <p className="mt-8 text-xl text-slate-600 max-w-lg font-light leading-relaxed">
-            Let us guide you with expertise in every legal area that matters most to your business and property.
-          </p>
-          
-          <div className="mt-10">
-            <a
-              href="#book"
-              className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-[#0f2820] hover:bg-legal-900 transition-colors shadow-lg"
-            >
-              Free Consultation
-            </a>
-          </div>
-        </div>
+      {/* Absolute Right Image Section */}
+      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full z-0 overflow-hidden">
+         <img
+            className="w-full h-full object-cover object-top animate-slow-zoom"
+            src={LAWYER_DETAILS.imageUrl}
+            alt="Advocate Pradeep Sharma"
+          />
+          {/* Overlay for mobile readability if image wraps or for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-r from-legal-50 via-legal-50/20 to-transparent lg:hidden"></div>
 
-        {/* Right Image */}
-        <div className="relative h-full w-full min-h-[500px] lg:min-h-[calc(100vh-80px)]">
-           <div className="absolute inset-0 bg-legal-gold/10 rounded-t-full transform translate-x-4 translate-y-4 hidden lg:block"></div>
-           <div className="absolute inset-0 rounded-t-[100px] lg:rounded-none overflow-hidden">
-             <img
-                className="w-full h-full object-cover object-top"
-                src={LAWYER_DETAILS.imageUrl}
-                alt="Advocate Pradeep Sharma"
-              />
-              {/* Gradient Overlay for Text Visibility on smaller screens if needed */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent lg:hidden"></div>
-           </div>
-           
-           {/* Floater Card */}
-           <div className="absolute bottom-10 left-4 sm:left-10 bg-white/90 backdrop-blur-md p-6 border-l-4 border-legal-gold shadow-2xl max-w-xs">
-              <p className="font-serif text-2xl text-legal-900 font-bold">"{LAWYER_DETAILS.cases}"</p>
-              <p className="text-sm text-slate-600 mt-1 uppercase tracking-wider">{LAWYER_DETAILS.subtitle}</p>
-           </div>
+          {/* Name Overlay on Image - Desktop Positioned */}
+          <div className="hidden lg:block absolute bottom-36 left-12 z-10">
+              <Reveal delay={800}>
+                <div className="backdrop-blur-md bg-black/40 p-6 border-l-[6px] border-legal-gold shadow-2xl">
+                  <h2 className="text-4xl font-serif text-white font-bold leading-none tracking-wide text-shadow-lg">
+                    {LAWYER_DETAILS.name}
+                  </h2>
+                  <div className="w-12 h-0.5 bg-legal-gold mt-3 mb-2"></div>
+                  <p className="text-white/90 text-xs uppercase tracking-[0.25em] font-medium pl-0.5">
+                    Advocate • Delhi High Court
+                  </p>
+                </div>
+              </Reveal>
+          </div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-full flex items-center pt-20 lg:pt-0">
+        
+        {/* Left Content Container */}
+        <div className="w-full lg:w-1/2 py-12 lg:py-0 pb-28 lg:pb-0">
+            <Reveal>
+              <p className="text-legal-gold font-bold tracking-widest uppercase text-sm mb-4">Our Services</p>
+            </Reveal>
+            <Reveal delay={200}>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-legal-900 leading-[1.1]">
+                We are specialists <br/>
+                <span className="font-normal italic">in the legal field</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={400}>
+              <p className="mt-8 text-xl text-slate-800 max-w-lg font-light leading-relaxed">
+                Let us guide you with expertise in every legal area that matters most to your business and property.
+              </p>
+            </Reveal>
+            
+            <Reveal delay={600}>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <a
+                  href="#book"
+                  className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-white bg-[#0f2820] hover:bg-legal-900 transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl"
+                >
+                  Free Consultation
+                </a>
+              </div>
+            </Reveal>
+
+            {/* Mobile-only Static Card: Flows naturally after the button to prevent overlap */}
+            <div className="mt-12 lg:hidden w-full max-w-xs">
+              <Reveal delay={800}>
+                 <div className="bg-white/95 backdrop-blur-md p-6 border-l-4 border-legal-gold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-1 hover:bg-white cursor-pointer group">
+                    <p className="font-serif text-2xl text-legal-900 font-bold group-hover:text-legal-accent transition-colors">"{LAWYER_DETAILS.cases}"</p>
+                    <p className="text-sm text-slate-600 mt-1 uppercase tracking-wider">{LAWYER_DETAILS.subtitle}</p>
+                 </div>
+              </Reveal>
+            </div>
         </div>
+        
+      </div>
+
+      {/* Floating Card - Desktop Only (Absolute Bottom Right) */}
+      <div className="hidden lg:flex absolute bottom-28 right-0 z-20 w-auto justify-end px-12 pointer-events-none">
+         <div className="bg-white/95 backdrop-blur-md p-6 border-l-4 border-legal-gold shadow-2xl max-w-xs w-full pointer-events-auto transition-all duration-300 hover:scale-105 hover:shadow-[0_20px_60px_-15px_rgba(198,142,118,0.4)] hover:-translate-y-2 cursor-pointer group animate-fade-in-up" style={{animationDelay: '1s'}}>
+            <p className="font-serif text-2xl text-legal-900 font-bold group-hover:text-legal-accent transition-colors">"{LAWYER_DETAILS.cases}"</p>
+            <p className="text-sm text-slate-600 mt-1 uppercase tracking-wider">{LAWYER_DETAILS.subtitle}</p>
+         </div>
       </div>
 
       {/* Bottom Ticker */}
-      <div className="bg-[#0f2820] py-6 relative overflow-hidden whitespace-nowrap">
+      <div className="absolute bottom-0 w-full bg-[#0f2820] py-8 lg:py-10 z-20 overflow-hidden whitespace-nowrap border-t border-legal-gold/20">
         <div className="animate-marquee inline-block">
           {[...SERVICES, ...SERVICES].map((service, index) => (
-            <span key={index} className="mx-8 text-white/90 font-serif text-xl sm:text-2xl inline-flex items-center">
+            <span key={index} className="mx-8 text-white/90 font-serif text-lg sm:text-xl inline-flex items-center">
                <span className="text-legal-gold text-sm mr-4">✱</span>
                {service.title}
             </span>
           ))}
         </div>
-        <div className="animate-marquee inline-block absolute top-6" aria-hidden="true">
+        <div className="animate-marquee inline-block absolute top-8 lg:top-10 left-0" aria-hidden="true">
           {[...SERVICES, ...SERVICES].map((service, index) => (
-            <span key={index} className="mx-8 text-white/90 font-serif text-xl sm:text-2xl inline-flex items-center">
+            <span key={index} className="mx-8 text-white/90 font-serif text-lg sm:text-xl inline-flex items-center">
                <span className="text-legal-gold text-sm mr-4">✱</span>
                {service.title}
             </span>
@@ -76,6 +110,9 @@ const Hero: React.FC = () => {
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        .text-shadow-lg {
+          text-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
       `}</style>
     </div>

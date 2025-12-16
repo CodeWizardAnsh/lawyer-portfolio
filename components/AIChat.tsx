@@ -9,6 +9,7 @@ const AIChat: React.FC = () => {
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [useThinking, setUseThinking] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -28,7 +29,7 @@ const AIChat: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const responseText = await sendMessageToGemini(userText);
+      const responseText = await sendMessageToGemini(userText, useThinking);
       setMessages(prev => [...prev, { role: 'model', text: responseText }]);
     } catch (error) {
       setMessages(prev => [...prev, { role: 'model', text: "Sorry, something went wrong." }]);
@@ -43,16 +44,33 @@ const AIChat: React.FC = () => {
       {isOpen && (
         <div className="bg-white rounded-lg shadow-2xl w-80 sm:w-96 mb-4 border border-slate-200 overflow-hidden flex flex-col h-[500px]">
           {/* Header */}
-          <div className="bg-legal-900 text-white p-4 flex justify-between items-center">
-            <div>
-              <h3 className="font-serif font-bold">Legal Assistant</h3>
-              <p className="text-xs text-slate-300">Powered by Gemini AI</p>
+          <div className="bg-legal-900 text-white p-4">
+            <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="font-serif font-bold text-lg">Legal Assistant</h3>
+                  <div className="flex items-center gap-1 mt-2">
+                      <button 
+                         onClick={() => setUseThinking(false)}
+                         className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-md border transition-all duration-200 ${!useThinking ? 'bg-legal-gold border-legal-gold text-white font-bold' : 'bg-transparent border-slate-600 text-slate-400 hover:border-slate-400'}`}
+                         title="Use Gemini 2.5 Flash Lite for fast responses"
+                      >
+                        ⚡ Fast
+                      </button>
+                      <button 
+                         onClick={() => setUseThinking(true)}
+                         className={`text-[10px] uppercase tracking-wider px-3 py-1 rounded-md border transition-all duration-200 ${useThinking ? 'bg-legal-gold border-legal-gold text-white font-bold' : 'bg-transparent border-slate-600 text-slate-400 hover:border-slate-400'}`}
+                         title="Use Gemini 3 Pro with Thinking capability"
+                      >
+                        🧠 Deep Think
+                      </button>
+                   </div>
+                </div>
+                <button onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white mt-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                </button>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-slate-300 hover:text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            </button>
           </div>
 
           {/* Messages */}
@@ -70,8 +88,9 @@ const AIChat: React.FC = () => {
             ))}
             {isLoading && (
                <div className="flex justify-start">
-               <div className="bg-white text-slate-500 border border-slate-200 rounded-lg p-3 text-xs shadow-sm italic">
-                 Typing...
+               <div className="bg-white text-slate-500 border border-slate-200 rounded-lg p-3 text-xs shadow-sm italic flex items-center gap-2">
+                 <span>{useThinking ? 'Thinking deeply...' : 'Typing...'}</span>
+                 {useThinking && <span className="animate-pulse">🧠</span>}
                </div>
              </div>
             )}
@@ -86,7 +105,7 @@ const AIChat: React.FC = () => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Ask about services..."
+                placeholder={useThinking ? "Ask a complex legal question..." : "Ask about services..."}
                 className="flex-1 border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-legal-gold"
               />
               <button 

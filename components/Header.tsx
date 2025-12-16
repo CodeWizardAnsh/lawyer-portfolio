@@ -23,13 +23,12 @@ const Header: React.FC = () => {
   return (
     <nav className={`fixed w-full z-40 transition-all duration-300 ${scrolled ? 'bg-legal-50/95 backdrop-blur-sm shadow-md py-2' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center">
           
           {/* Logo Section */}
-          <div className="flex-shrink-0 flex items-center gap-3">
+          <div className="flex-shrink-0 flex items-center gap-3 mr-12">
             <a href="#home" className="flex items-center gap-2 group">
               <div className="text-legal-gold transition-colors">
-                 {/* Adjusted sizing to allow natural width */}
                  <PSLogo className="h-12 w-auto sm:h-16" />
               </div>
               <div className="flex flex-col">
@@ -43,8 +42,8 @@ const Header: React.FC = () => {
             </a>
           </div>
           
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Nav Links - Shifted to Left */}
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -54,24 +53,23 @@ const Header: React.FC = () => {
                 {link.name}
               </a>
             ))}
-            <div className="flex items-center gap-4 ml-4">
+          </div>
+
+          {/* Spacer to push buttons to right */}
+          <div className="flex-grow"></div>
+
+          {/* Desktop Action Buttons - Far Right */}
+          <div className="hidden md:flex items-center gap-4">
                 <a
                     href="#contact"
-                    className="text-legal-900 border border-legal-900 px-4 py-2 text-sm font-medium hover:bg-legal-900 hover:text-white transition-all"
+                    className="text-legal-900 border border-legal-900 px-4 py-2 text-sm font-medium hover:bg-legal-gold hover:border-legal-gold hover:text-white transition-all backdrop-blur-sm bg-white/10"
                 >
                     Contact Us
                 </a>
-                <a
-                    href="#book"
-                    className="bg-legal-900 text-white px-5 py-2 text-sm font-medium hover:bg-legal-gold transition-all shadow-sm"
-                >
-                    Sign Up
-                </a>
-            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Menu Button (Right Aligned) */}
+          <div className="md:hidden flex items-center ml-auto">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               type="button"
@@ -94,7 +92,7 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-legal-50 shadow-xl border-t border-legal-100 absolute w-full">
+        <div className="md:hidden bg-legal-50 shadow-xl border-t border-legal-100 absolute w-full top-full left-0">
           <div className="px-4 pt-2 pb-6 space-y-2">
             {navLinks.map((link) => (
               <a
@@ -109,17 +107,10 @@ const Header: React.FC = () => {
             <div className="mt-4 flex flex-col gap-3">
                  <a
                     href="#contact"
-                    className="block text-center w-full border border-legal-900 text-legal-900 px-4 py-3 rounded-none text-base font-medium"
+                    className="block text-center w-full border border-legal-900 text-legal-900 px-4 py-3 rounded-none text-base font-medium hover:bg-legal-gold hover:border-legal-gold hover:text-white transition-colors"
                     onClick={() => setIsMenuOpen(false)}
                 >
                     Contact Us
-                </a>
-                <a
-                    href="#book"
-                    className="block text-center w-full bg-legal-900 text-white px-4 py-3 rounded-none text-base font-medium"
-                    onClick={() => setIsMenuOpen(false)}
-                >
-                    Sign Up
                 </a>
             </div>
           </div>

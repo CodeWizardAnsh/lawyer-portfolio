@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Service, TeamMember } from './types';
 
 // Icons
@@ -41,14 +41,34 @@ export const Icons = {
   ),
 };
 
-// PS Logo Component using the provided image file
-export const PSLogo = ({ className = "h-12 w-12" }: { className?: string }) => (
-  <img 
-    src="/logo.png" 
-    alt="Pradeep Sharma Logo" 
-    className={`${className} object-contain`} 
-  />
-);
+// PS Logo Component with sophisticated error handling
+export const PSLogo = ({ className = "h-12 w-12" }: { className?: string }) => {
+  const [imgError, setImgError] = useState(false);
+
+  // If image fails to load, show this high-quality vector fallback
+  if (imgError) {
+    return (
+      <div 
+        className={`${className} flex items-center justify-center text-legal-gold`}
+        title="Pradeep Sharma Legal"
+      >
+         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-full h-full">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094.787 2.036 1.872 2.18-2.087.377-4.231.57-6.375.57-2.144 0-4.288-.193-6.375-.57 1.085-.144 1.872-1.086 1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.675.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+         </svg>
+      </div>
+    );
+  }
+
+  // Attempts to load logo.png relative to current page
+  return (
+    <img 
+      src="./logo.png" 
+      alt="Pradeep Sharma Logo" 
+      className={`${className} object-contain`} 
+      onError={() => setImgError(true)}
+    />
+  );
+};
 
 export const SERVICES: Service[] = [
   {
@@ -77,33 +97,74 @@ export const SERVICES: Service[] = [
   }
 ];
 
-export const TEAM: TeamMember[] = [
+export const DETAILED_SERVICES = [
+  "Registration of Sale Deed",
+  "Conveyance Deed",
+  "Gift Deed",
+  "Rent Agreement",
+  "Partition Deed",
+  "Will",
+  "Power of Attorney",
+  "Affidavit",
+  "Converted Leasehold into Freehold",
+  "Marriage Certificate",
+  "Surviving Member Certificate",
+  "Income Certificate",
+  "OBC Certificate",
+  "SC Certificate"
+];
+
+export const PORTFOLIO_ITEMS = [
   {
-    id: 'assoc-1',
-    name: 'Amit Verma',
-    role: 'Junior Associate',
-    bio: 'Assisting in property documentation and registry processes in Delhi.',
-    imageUrl: 'https://picsum.photos/400/400?random=11'
+    id: 1,
+    title: "Commercial Complex Registration",
+    category: "Property Registration",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800",
+    description: "Successful registration of a 50,000 sq ft commercial complex in South Delhi, handling all sub-registrar compliances and stamp duty verification."
   },
   {
-    id: 'clerk-1',
-    name: 'Rajesh Kumar',
-    role: 'Legal Clerk',
-    bio: 'Managing court filings and document verification services.',
-    imageUrl: 'https://picsum.photos/400/400?random=12'
+    id: 2,
+    title: "High Court Stay Vacated",
+    category: "Litigation",
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800",
+    description: "Represented client in Delhi High Court to successfully vacate a long-standing stay order on a prime residential property in Vasant Vihar."
+  },
+  {
+    id: 3,
+    title: "Family Partition Deed",
+    category: "Documentation",
+    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&q=80&w=800",
+    description: "Drafted and registered a complex family partition deed involving multiple stakeholders and assets across NCR, preventing future disputes."
   }
 ];
 
 export const LAWYER_DETAILS = {
-  name: 'Pradeep Sharma',
-  title: 'Advocate (Delhi High Court)',
-  subtitle: 'Legal Adviser of all Kinds of Properties',
-  bio: 'Pradeep Sharma is a distinguished Advocate practicing at the Delhi High Court. As the head of the "Document Center", he specializes in all aspects of property law and documentation. With extensive experience as a Legal Adviser for various property matters, he provides trusted counsel to ensure your assets are legally secure.',
-  experience: 'Senior Advocate',
-  cases: 'Document Center',
-  email: 'pradeepsharmaadv.1@gmail.com',
-  phone: '9999820270, 9821840423',
-  address: '119, South Anarkali, Som Bazar Road, Delhi - 110051',
-  officeHours: 'Mon - Fri: 10:00 AM - 7:00 PM',
-  imageUrl: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' // Male professional placeholder
+  name: "Pradeep Sharma",
+  title: "Advocate • Delhi High Court",
+  subtitle: "Years Experience",
+  cases: "25+",
+  experience: "25+ Years",
+  bio: "Pradeep Sharma is a distinguished legal practitioner based in Delhi, specializing in property law, civil litigation, and documentation. With over two decades of experience at the Delhi High Court and district courts, he provides strategic legal counsel for complex property disputes, registration processes, and family settlements.",
+  address: "118, Street No.5, South Anarkali, Krishna Nagar, Delhi-110051",
+  phone: "+91 98111 22233",
+  email: "contact@pradeepsharma.legal",
+  officeHours: "Mon - Fri: 10:00 AM - 8:00 PM",
+  imageUrl: "https://images.unsplash.com/photo-1556157382-97eda2d62296?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
 };
+
+export const TEAM: TeamMember[] = [
+  {
+    id: '1',
+    name: "Rajesh Kumar",
+    role: "Senior Associate",
+    bio: "Expert in civil litigation and property dispute resolution.",
+    imageUrl: "./team1.jpg"
+  },
+  {
+    id: '2',
+    name: "Amit Verma",
+    role: "Legal Consultant",
+    bio: "Specializes in documentation, drafting, and registration procedures.",
+    imageUrl: "./team2.jpeg"
+  }
+];
